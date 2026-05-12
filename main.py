@@ -26,7 +26,7 @@ def main():
     AsteroidField.containers = (updatable)
     field = AsteroidField()
     player = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
-    score = Score(SCREEN_WIDTH/2,0)
+    score = Score(SCREEN_WIDTH//2,10)
     while True:
         log_state()
         for event in pygame.event.get():
@@ -38,14 +38,14 @@ def main():
         for elem in drawable:
             elem.draw(screen)
         for asteroid in asteroids:
-            if asteroid.collides_with(player):
+            if asteroid.collides_with(player) and asteroid.is_moving:
                 log_event("player_hit")
                 print("Game over!")
                 print(f"score is {score.value}")
                 sys.exit()
         for asteroid in asteroids:
             for shot in shots:
-                if asteroid.collides_with(shot):
+                if asteroid.collides_with(shot) and asteroid.is_moving:
                     score.value += 1
                     log_event("asteroid_shot")
                     asteroid.split()
